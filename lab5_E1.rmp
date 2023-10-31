@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="10.1.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="10.1.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="10.1.001" expanded="true" height="68" name="Retrieve" width="90" x="45" y="34">
+        <parameter key="repository_entry" value="//Samples/data/Iris"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="10.1.001" expanded="true" height="68" name="Store" width="90" x="179" y="34">
+        <parameter key="repository_entry" value="//New Local Repository/Data/new iris"/>
+      </operator>
+      <operator activated="true" class="detect_outlier_distances" compatibility="10.1.001" expanded="true" height="82" name="Detect Outlier (Distances)" width="90" x="313" y="34">
+        <parameter key="number_of_neighbors" value="10"/>
+        <parameter key="number_of_outliers" value="10"/>
+        <parameter key="distance_function" value="euclidian distance"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Store" to_port="input"/>
+      <connect from_op="Store" from_port="through" to_op="Detect Outlier (Distances)" to_port="example set input"/>
+      <connect from_op="Detect Outlier (Distances)" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
